@@ -1,0 +1,7 @@
+*.pyc
+Value/
+*.code-workspace
+.vscode/
+.idea/
+sqlite.py
+config.json
