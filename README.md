@@ -31,7 +31,7 @@ Now lets get into it!
         "prefix": "A prefix of your choice."
     },
     "value": {
-        "role": 0 //The roleid of the role you want to have access to add, remove, reset
+        "role": 0 //The roleid of the role you want to have access to value manager commands.
     }
 }
 ```
