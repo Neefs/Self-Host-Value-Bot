@@ -1,13 +1,13 @@
 
 
 
-# Value-Bot
+# Self-Host-Value-Bot
 ---
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Neefs/Value-Bot/graphs/commit-activity)
-[![GitHub license](https://img.shields.io/github/license/Neefs/Value-Bot.svg)](https://github.com/Neefs/Value-Bot/blob/main/LICENSE)
-[![Github all releases](https://img.shields.io/github/downloads/Neefs/Value-Bot/total.svg)](https://github.com/Neefs/Value-Bot/releases/)
-[![GitHub pull-requests](https://img.shields.io/github/issues-pr/Neefs/Value-Bot.svg)](https://github.com/Neefs/Value-Bot/pull/)
-[![GitHub issues](https://img.shields.io/github/issues/Neefs/Value-Bot.svg)](https://github.com/Neefs/Value-Bot/issues/)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Neefs/Self-Host-Value-Bot/graphs/commit-activity)
+[![GitHub license](https://img.shields.io/github/license/Neefs/Self-Host-Value-Bot.svg)](https://github.com/Neefs/Self-Host-Value-Bot/blob/main/LICENSE)
+[![Github all releases](https://img.shields.io/github/downloads/Neefs/Self-Host-Value-Bot/total.svg)](https://github.com/Neefs/Self-Host-Value-Bot/releases/)
+[![GitHub pull-requests](https://img.shields.io/github/issues-pr/Neefs/Self-Host-Value-Bot.svg)](https://github.com/Neefs/Self-Host-Value-Bot/pulls/)
+[![GitHub issues](https://img.shields.io/github/issues/Neefs/Self-Host-Value-Bot.svg)](https://github.com/Neefs/Self-Host-Value-Bot/issues/)
 
 Ever want to keep trace of the money someone is making? Whether it is a minecraft server with an economy or a made up currency this is the bot for you. This is bot and easy to setup. 
 
