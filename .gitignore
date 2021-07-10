@@ -5,3 +5,4 @@ Value/
 .idea/
 sqlite.py
 config.json
+*.db
