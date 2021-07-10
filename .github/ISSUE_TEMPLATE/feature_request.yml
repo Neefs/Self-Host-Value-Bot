@@ -1,0 +1,58 @@
+name: Feature request
+description: Suggest an idea for this project
+labels: [feature request]
+
+body:
+  - type: markdown
+    attributes:
+      value: Thank you for taking the time to fill out this feature request.
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: A clear and brief summary of the request.
+    validations: 
+      required: True
+  - type: dropdown
+    id: module
+    attributes:
+      label: Module
+      description: Where does this feature belong?
+      options:
+        - Value
+        - Developer
+        - Help
+        - General
+        - Other
+    validations: 
+      required: True
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is your feature request related to a problem? Please describe.
+      description: A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you are looking for.
+      description: A clear and concise description of what you want to happen.
+    validations:
+      required: True
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add any other context or screenshots about the feature request here.
+    validations:
+      required: True
+  - type: markdown
+    attributes:
+      value: |
+        We will look at you feature request as soon as possible. Please wait **2 weeks** before messageing the owner.
+        If you are looking for faster support join our [discord](https://discord.gg/pqG6TRuYTE)
+    
+
+
+    
+      
+      

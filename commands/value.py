@@ -1,5 +1,8 @@
 import json
 import typing
+
+from discord import guild
+
 from utils.main import server_balance, value_manager
 
 import discord
@@ -100,6 +103,7 @@ class Value(commands.Cog):
 
         view = paginationView(pages, ctx)
         view.msg = await ctx.send(embed=pages[0], view=view)
+        
             
 
 
