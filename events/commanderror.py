@@ -33,7 +33,10 @@ class CommandError(commands.Cog):
             alias = ctx.command.name
             
             await ctx.send(embed=Embed(title='Error', color=0xff0000, description=f"Error: {error.args[0]}\nCorrect Usage: {ctx.clean_prefix}{alias} {ctx.command.signature}"))
-            await self.bot.help_command.send_command_help(ctx.command)
+            return
+
+        elif isinstance(error, commands.MissingRole):
+            await ctx.send(embed=Embed(title='Error', color=0xff0000, description='Error: **Missing role {0}**. \n{0} is required to run this command.\nIf you belive this is an error join my [support discord]({1})'.format(error.missing_role.mention, self.discord)))
             return
         
         else:

@@ -1,15 +1,13 @@
+import asyncio
 import json
 import typing
-
-from discord import guild
-
-from utils.main import server_balance, value_manager
 
 import discord
 from discord.embeds import Embed
 from discord.ext import commands
 from sqlite import insert_data, read_data, remove_data, update_data
 from utils.converters import MoneyConverter
+from utils.main import server_balance, value_manager
 from utils.pagination import paginationView
 
 
@@ -73,6 +71,35 @@ class Value(commands.Cog):
                 await insert_data(database='banks', tables=[['user', user.id], ['amount', bal]])
             await ctx.send(embed=Embed(title='Value Removed', color=self.bot.user.color, description='Removed ${:,}. {} balance is now ${:,}'.format(amount, user.mention, bal)))
 
+    @commands.command(aliases=['clear'])
+    @value_manager()
+    async def reset(self, ctx, member:typing.Optional[discord.User]):
+        """Resets the value of a specified player or the whole server."""
+        bank:dict = self.bot.banks
+        if member:
+            if bank.get(member.id) is None:
+                raise commands.BadArgument('The user is not in the database.')
+            bank.pop(member.id)
+            await remove_data(database='banks', checks=[['user', member.id]])
+            await ctx.send(embed=Embed(title='Reset Value', description=f'Reset the value of {member.mention}.', color=self.bot.user.color))
+        else:
+            await ctx.send(f':warning: **You are about to reset the __MONEY__ module**\n{ctx.author.mention} Type CONFIRM RESET in chat within the next 10 seconds to confirm the reset')
+            try: msg:discord.Message = await self.bot.wait_for('message', timeout=10, check=lambda message: message.author == ctx.author and message.channel == ctx.channel)
+            except asyncio.TimeoutError:
+                await ctx.send(embed=Embed(title='Error', color=0xff0000, description='Timed out. If you wish to reset all balances try again.'))
+                return
+            if msg.content.__contains__('CONFIRM RESET'):
+                bank.clear()
+                print(bank)
+                value = await remove_data(database='banks')
+                print(value)
+                await ctx.send(embed=Embed(title='Reset', color=self.bot.user.color, description="""
+                :white_check_mark: RESET CONFIRMED
+                The highscores and history of the VALUE module has been deleted.
+                Hope you had a good map.
+                """))
+            else:
+                await ctx.send('Reset has been aborted.')
 
     @commands.command()
     async def top(self, ctx):
@@ -88,15 +115,10 @@ class Value(commands.Cog):
             embed.description += f"**{position}.** <@{user}>" + " {:,}\n".format(value)
             position+=1
             place += 1
-
             if place >= 10:
                 pages.append(embed)
                 embed = Embed(title='Value Top', color=self.bot.user.color, description='').set_footer(text='Server Balance ${:,}'.format(await server_balance(self.bot)))
                 place = 0
-        # if len(pages) == 0:
-        #     pages.append(embed)
-        # if place >= 1 and len(pages) != 1:
-        #     pages.append(embed)
         if embed.description != '':
             pages.append(embed)
 

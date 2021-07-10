@@ -117,6 +117,7 @@ async def read_data(database: str=None, tables: list=None, checks: list=None, or
         await db.close()
 
 async def remove_data(database: str=None, checks: list=None) -> None:
+    """IF NOT CHECKS DELTES EVERYTHING IN THE DATABASE TABLE"""
     db = await aiosqlite.connect("data/database.db")
     cur = await db.cursor()
 
@@ -134,6 +135,16 @@ async def remove_data(database: str=None, checks: list=None) -> None:
             await cur.execute(f"DELETE FROM {database} {where_val}", tuple(where_ans))
             await db.commit()
         
+        except Exception as e:
+            pass
+        else:
+            pass
+        finally:
+            await db.close()
+    else:
+        try:
+            await cur.execute(f'DELETE FROM {database}')
+            await db.commit()
         except Exception as e:
             pass
         else:
