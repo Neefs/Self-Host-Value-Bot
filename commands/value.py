@@ -1,37 +1,32 @@
+import json
 import typing
+from utils.main import server_balance, value_manager
+
+import discord
 from discord.embeds import Embed
-from discord.errors import InvalidArgument
+from discord.ext import commands
+from sqlite import insert_data, read_data, remove_data, update_data
 from utils.converters import MoneyConverter
 from utils.pagination import paginationView
-import discord
-from sqlite import read_data, remove_data, insert_data, update_data
-from discord.ext import commands
+
 
 class Value(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    def cog_check(self, ctx: commands.Context):
-        role = ctx.guild.get_role(self.bot.config['value']['role'])
-        if not role:
-            raise commands.BadArgument('The role defined in the config could not be found in this guild. Please change the role in config then try again.')
-        if role in ctx.author.roles:
-            return True
-        raise commands.MissingRole(role)
-
-    # def valuemanager():
-    #     async def predicate
+  
     
     @commands.Cog.listener()
     async def on_ready(self):
         print('✅ Value Cog is ready')
 
     @commands.command()
+    @value_manager()
     async def add(self, ctx, member:typing.Optional[discord.User], amount:MoneyConverter):
-        """Add your/another players balance."""
+        """Adds to your/another players balance."""
         bank:dict = self.bot.banks
         if member: user = member
-        else: user = ctx.author
+        else: user = ctx.author 
 
         if bank.get(user.id) is not None:
             bal = bank[user.id]
@@ -40,7 +35,6 @@ class Value(commands.Cog):
             await ctx.send(embed=Embed(title='Value Added', color=self.bot.user.color, description='Added ${:,}. {} balance is now ${:,}'.format(amount, user.mention, bal)))
         else:
             incase = await read_data(database='banks', tables=['amount'], checks=[['user', user.id]])
-            print(incase)
             if incase != []:
                 bal = bank[user.id] = incase[0][0]+amount
             else: 
@@ -49,12 +43,41 @@ class Value(commands.Cog):
             await ctx.send(embed=Embed(title='Value Added', color=self.bot.user.color, description='Added ${:,}. {} balance is now ${:,}'.format(amount, user.mention, bal)))
 
     @commands.command()
+    @value_manager()
+    async def remove(self, ctx, member:typing.Optional[discord.User], amount:MoneyConverter):
+        """Removes to your/another players balance."""
+        bank:dict = self.bot.banks
+        if member: user = member
+        else: user = ctx.author 
+        if bank.get(user.id) is not None:
+            bal = bank[user.id]
+            if bal - amount < 0:
+                bal = bank[user.id] = 0
+            else:
+                bal = bank[user.id] = bal-amount
+            await update_data(database='banks', tables=[['amount', bal]], checks=[['user', user.id]])
+            await ctx.send(embed=Embed(title='Value Removed', color=self.bot.user.color, description='Removed ${:,}. {} balance is now ${:,}'.format(amount, user.mention, bal)))
+        else:
+            incase = await read_data(database='banks', tables=['amount'], checks=[['user', user.id]])
+            if incase != []:
+                bal = bank[user.id] = incase[0][0]
+                if bal - amount < 0:
+                    bal = bank[user.id] = 0
+                else:
+                    bal = bank[user.id] = bal-amount
+            else:
+                bal = bank[user.id] = 0
+                await insert_data(database='banks', tables=[['user', user.id], ['amount', bal]])
+            await ctx.send(embed=Embed(title='Value Removed', color=self.bot.user.color, description='Removed ${:,}. {} balance is now ${:,}'.format(amount, user.mention, bal)))
+
+
+    @commands.command()
     async def top(self, ctx):
         bank:dict = self.bot.banks
         if bank == {}:
             await ctx.send(embed=Embed(title='Value Top', color=self.bot.user.color, description='Get value Slackas.'))
             return
-        embed = Embed(title='Value Top', color=self.bot.user.color, description='')
+        embed = Embed(title='Value Top', color=self.bot.user.color, description='').set_footer(text='Server Balance ${:,}'.format(await server_balance(self.bot)))
         pages = []
         position = 1
         place = 0
@@ -65,7 +88,7 @@ class Value(commands.Cog):
 
             if place >= 10:
                 pages.append(embed)
-                embed = Embed(title='Value Top', color=self.bot.user.color, description='')
+                embed = Embed(title='Value Top', color=self.bot.user.color, description='').set_footer(text='Server Balance ${:,}'.format(await server_balance(self.bot)))
                 place = 0
         # if len(pages) == 0:
         #     pages.append(embed)
