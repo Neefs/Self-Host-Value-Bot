@@ -54,5 +54,5 @@ class CommandError(commands.Cog):
             tb.print_exception(type(error), error, error.__traceback__)
 
 
-def setup(bot):
-    bot.add_cog(CommandError(bot))
+async def setup(bot):
+    await bot.add_cog(CommandError(bot))

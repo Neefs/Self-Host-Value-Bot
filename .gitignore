@@ -5,3 +5,4 @@ Value/
 .idea/
 config.json
 *.db
+.venv/

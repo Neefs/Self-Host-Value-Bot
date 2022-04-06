@@ -49,7 +49,7 @@ class Developer(commands.Cog):
 
                 if cogpy in files:
                     await ctx.send(f'Loading {shortcog} cog...', delete_after=10)
-                    self.bot.load_extension(f"{folder}.{shortcog}")
+                    await self.bot.load_extension(f"{folder}.{shortcog}")
                     await ctx.send(f'{shortcog} cog has been loaded', delete_after=10)
                     print(f"⚙️ `{cogpy}` {folder[:-1]} cog has been loaded.")
                     return
@@ -98,8 +98,8 @@ class Developer(commands.Cog):
 
                 if cogpy in files:
                     await ctx.send(f'Reloading {shortcog} cog...', delete_after=10)
-                    self.bot.unload_extension(f"{folder}.{shortcog}")
-                    self.bot.load_extension(f"{folder}.{shortcog}")
+                    await self.bot.unload_extension(f"{folder}.{shortcog}")
+                    await self.bot.load_extension(f"{folder}.{shortcog}")
                     await ctx.send(f'{shortcog} cog has been reloaded', delete_after=10)
                     print(f"⚙️ `{cogpy}` {folder[:-1]} cog has been reloaded.")
                     return
@@ -120,5 +120,5 @@ class Developer(commands.Cog):
     
 
 
-def setup(bot):
-    bot.add_cog(Developer(bot))
+async def setup(bot):
+    await bot.add_cog(Developer(bot))
