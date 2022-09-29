@@ -3,7 +3,7 @@
 
 # Self-Host-Value-Bot
 ---
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Neefs/Self-Host-Value-Bot/graphs/commit-activity)
+[![Maintenance](https://img.shields.io/maintenance/no/2022)](https://github.com/Neefs/Self-Host-Value-Bot/graphs/commit-activity)
 [![GitHub license](https://img.shields.io/github/license/Neefs/Self-Host-Value-Bot.svg)](https://github.com/Neefs/Self-Host-Value-Bot/blob/main/LICENSE)
 [![Github all releases](https://img.shields.io/github/downloads/Neefs/Self-Host-Value-Bot/total.svg)](https://github.com/Neefs/Self-Host-Value-Bot/releases/)
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/Neefs/Self-Host-Value-Bot.svg)](https://github.com/Neefs/Self-Host-Value-Bot/pulls/)
